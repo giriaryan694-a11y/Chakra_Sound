@@ -8,7 +8,7 @@ Each sound is tuned to resonate with a specific chakra — restoring balance, pr
 Built in Python with love and ancient wisdom 🌸  
 
 ## Update 
- I have recently added its web version which is more better : https://giriaryan694-a11y.github.io/Chakra_Sound/ 
+ I have recently added its web version which is more better on clear speakers eg phones : https://giriaryan694-a11y.github.io/Chakra_Sound/ 
 ---
 
 ## ✨ What Are Chakras?
