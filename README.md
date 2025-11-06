@@ -59,6 +59,10 @@ Listening to these tones during meditation or yoga can:
    ```bash
    pip install -r requirements.txt
    ```
+6. Run
+   ```
+   python main.py
+   ```
 
 ## 🌸 Usage Tips
   *Use headphones or a quiet space for best experience.*
