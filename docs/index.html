@@ -3,23 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chakra Sound Generator 🌈</title>
+<title>🕉️ Chakra Sound Generator</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #1e1e1e; color: white; text-align: center; padding: 2em; }
-  button { margin: 0.5em; padding: 1em 2em; font-size: 1em; cursor: pointer; border-radius: 10px; border: none; }
-  .chakra { display:block; margin: 0.5em auto; width: 200px; font-weight: bold; }
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #121212, #000);
+    color: #eee;
+    text-align: center;
+    padding: 30px;
+  }
+  h1 {
+    font-size: 2.5em;
+    color: #f0e68c;
+    text-shadow: 0 0 15px #f0e68c;
+  }
+  .chakra-select, button, input {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1em;
+  }
+  select {
+    width: 250px;
+    background-color: #222;
+    color: #fff;
+  }
+  input {
+    width: 100px;
+    text-align: center;
+    background-color: #222;
+    color: #fff;
+  }
+  button {
+    background: linear-gradient(45deg, #8a2be2, #4b0082);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #9932cc;
+  }
+  .chakra-info {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #aaa;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .chakra-visual {
+    margin-top: 20px;
+    height: 80px;
+    transition: background 0.5s ease;
+    border-radius: 10px;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 1em;
+    color: #999;
+  }
+  .quote {
+    font-style: italic;
+    color: #c0c0c0;
+    margin-top: 10px;
+  }
 </style>
 </head>
 <body>
 
-<h1>🕉️ Chakra Sound Generator</h1>
+<h1>🌈 Chakra Sound Generator</h1>
+<p><strong>Use headphones or earphones for the best experience 🎧</strong></p>
 
-<select id="chakraSelect" class="chakra">
+<select id="chakraSelect" class="chakra-select">
   <option value="1">Root Chakra — 194.18 Hz</option>
   <option value="2">Sacral Chakra — 210.42 Hz</option>
-  <option value="3">Solar Plexus Chakra — 126.22 Hz</option>
-  <option value="4">Heart Chakra — 136.10 Hz</option>
-  <option value="5">Throat Chakra — 141.27 Hz</option>
+  <option value="3">Solar Plexus — 126.22 Hz</option>
+  <option value="4">Heart — 136.10 Hz</option>
+  <option value="5">Throat — 141.27 Hz</option>
   <option value="6">Third Eye — 221.23 Hz</option>
   <option value="7">Crown — 172.06 Hz</option>
   <option value="all">Play All Chakras</option>
@@ -27,56 +91,75 @@
 
 <br>
 
-<label for="duration">Duration (seconds): </label>
+<label for="duration">Duration (seconds):</label>
 <input type="number" id="duration" value="5" min="1" max="30">
 
 <br><br>
-
 <button onclick="playChakra()">🎵 Play Chakra</button>
+
+<div class="chakra-visual" id="chakraVisual"></div>
+
+<div class="chakra-info" id="chakraInfo">
+  The seven chakras are ancient Indian energy centers aligned along the spine — each governing
+  different aspects of your physical, emotional, and spiritual being. When their vibrations are in harmony,
+  inner peace and balance awaken within you. This tool uses sound frequencies based on traditional tuning
+  to resonate with each chakra’s energy field.
+</div>
+
+<footer>
+  <div class="quote">“When the inner sound aligns with universal vibration, the soul awakens.”</div>
+  <div style="margin-top:5px;">Made with ❤️ and ancient wisdom by Aryan</div>
+</footer>
 
 <script>
 const chakras = {
-    1: {name:"Root", freq:194.18, color:"red"},
-    2: {name:"Sacral", freq:210.42, color:"orange"},
-    3: {name:"Solar Plexus", freq:126.22, color:"yellow"},
-    4: {name:"Heart", freq:136.10, color:"green"},
-    5: {name:"Throat", freq:141.27, color:"blue"},
-    6: {name:"Third Eye", freq:221.23, color:"indigo"},
-    7: {name:"Crown", freq:172.06, color:"violet"}
+  1: {name:"Root", freq:194.18, color:"#ff0000"},
+  2: {name:"Sacral", freq:210.42, color:"#ff7f00"},
+  3: {name:"Solar Plexus", freq:126.22, color:"#ffff00"},
+  4: {name:"Heart", freq:136.10, color:"#00ff00"},
+  5: {name:"Throat", freq:141.27, color:"#1e90ff"},
+  6: {name:"Third Eye", freq:221.23, color:"#4b0082"},
+  7: {name:"Crown", freq:172.06, color:"#ee82ee"}
 };
 
 function playTone(frequency, duration) {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.value = frequency;
-    const gainNode = audioCtx.createGain();
-    gainNode.gain.value = 0.3; // lower volume
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    oscillator.start();
-    oscillator.stop(audioCtx.currentTime + duration);
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  oscillator.type = 'sine';
+  oscillator.frequency.value = frequency;
+  gainNode.gain.value = 0.3;
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + duration);
+}
+
+function updateVisual(color, chakraName, freq) {
+  const vis = document.getElementById("chakraVisual");
+  vis.style.background = `radial-gradient(circle, ${color} 20%, transparent 80%)`;
+  vis.innerHTML = `<p style="padding-top:30px;font-weight:bold;">🌠 ${chakraName} Chakra (${freq} Hz)</p>`;
 }
 
 function playChakra() {
-    const selected = document.getElementById("chakraSelect").value;
-    const duration = parseFloat(document.getElementById("duration").value);
+  const selected = document.getElementById("chakraSelect").value;
+  const duration = parseFloat(document.getElementById("duration").value);
 
-    if(selected === "all") {
-        let delay = 0;
-        for(const key in chakras){
-            setTimeout(() => {
-                const c = chakras[key];
-                console.log(`Playing ${c.name} Chakra (${c.freq} Hz)`);
-                playTone(c.freq, duration);
-            }, delay*1000);
-            delay += duration;
-        }
-    } else {
-        const c = chakras[selected];
-        console.log(`Playing ${c.name} Chakra (${c.freq} Hz)`);
-        playTone(c.freq, duration);
+  if (selected === "all") {
+    let delay = 0;
+    for (const key in chakras) {
+      const c = chakras[key];
+      setTimeout(() => {
+        updateVisual(c.color, c.name, c.freq);
+        playTone(c.freq * 2, duration); // doubled for audibility
+      }, delay * 1000);
+      delay += duration + 0.5;
     }
+  } else {
+    const c = chakras[selected];
+    updateVisual(c.color, c.name, c.freq);
+    playTone(c.freq * 2, duration); // double frequency for better hearing
+  }
 }
 </script>
 </body>
