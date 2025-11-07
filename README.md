@@ -2,7 +2,7 @@
 ![Screenshot](Screenshot.png)
 
 ## 🕉️ About the Project
-**Chakra_Sound** is a terminal-based vibrational healing tool that generates pure frequency tones corresponding to the seven chakras of the human energy system.  
+**Chakra_Sound** is a terminal-based & web-based vibrational healing tool that generates pure frequency tones corresponding to the seven chakras of the human energy system.  
 Each sound is tuned to resonate with a specific chakra — restoring balance, promoting mindfulness, and deepening your meditation experience.  
 
 Built in Python with love and ancient wisdom 🌸  
